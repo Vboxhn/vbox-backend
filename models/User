@@ -1,12 +1,13 @@
+// vbox-backend/models/User.js
 const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema(
   {
-    nombre:   { type: String, required: true, trim: true },
-    apellido: { type: String, required: true, trim: true },
-    telefono: { type: String, required: true, trim: true },
-    email:    { type: String, required: true, unique: true, lowercase: true, trim: true },
-    password: { type: String, required: true }
+    nombre: { type: String, required: true },
+    apellido: { type: String, required: true },
+    telefono: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true }, // sin hash para ir rápido
   },
   { timestamps: true }
 );
