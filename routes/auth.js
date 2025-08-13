@@ -1,13 +1,22 @@
 // routes/auth.js
 const router = require('express').Router();
-const { register } = require('../controllers/authController');
+const User = require('../models/User');
 
-// Ruta “oficial”
-router.post('/register', register);
+// Login simple (sin hash para terminar rápido; luego podemos meter bcrypt)
+router.post('/login', async (req, res) => {
+  try {
+    const { email, password } = req.body || {};
+    if (!email || !password)
+      return res.status(400).json({ message: 'Credenciales obligatorias' });
 
-// Aliases para que NUNCA vuelva a salir 404
-router.post('/users/register', register);
-router.post('/users', register);
-router.post('/auth/register', register);
+    const user = await User.findOne({ email, password });
+    if (!user) return res.status(401).json({ message: 'Usuario no encontrado' });
+
+    return res.json({ message: 'Login exitoso', userId: user._id });
+  } catch (err) {
+    console.error('Error en /api/auth/login:', err);
+    return res.status(500).json({ message: 'Error interno' });
+  }
+});
 
 module.exports = router;

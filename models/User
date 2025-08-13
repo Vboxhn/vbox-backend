@@ -1,15 +1,15 @@
-// vbox-backend/models/User.js
-const mongoose = require('mongoose');
+// models/User.js
+const { Schema, model } = require('mongoose');
 
-const UserSchema = new mongoose.Schema(
+const UserSchema = new Schema(
   {
     nombre: { type: String, required: true },
     apellido: { type: String, required: true },
     telefono: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true }, // sin hash para ir rápido
+    password: { type: String, required: true },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = model('User', UserSchema);
